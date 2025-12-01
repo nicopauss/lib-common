@@ -6,7 +6,7 @@ jobs:
   tests:
     strategy:
       matrix:
-        os: [ubuntu-22.04]
+        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }}
     defaults:
@@ -37,11 +37,6 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
 
-      - name: Update pip and install virtualenv
-        run: |
-          sudo python3 -m pip install --upgrade pip && \
-          sudo python3 -m pip install virtualenv
-
       - name: Install asdf
         uses: asdf-vm/actions/setup@v4
         with:
@@ -57,7 +52,7 @@ jobs:
         run: waf configure
 
       - name: Compile with GCC, default
-        run: waf build
+        run: waf build -vvv
 
       - name: Check with GCC, default
         run: waf check
